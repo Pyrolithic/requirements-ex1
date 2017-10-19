@@ -2,13 +2,16 @@
 #define SORT_H
 
 #include <iostream>
+#include <vector>
 
-void insertionsort(int v[], double k, int p[]);
-void quickSort(int v[], int low, int high, int p[], double k);
-void quickSort2(int v[], int low, int high, int p[], int n);
-int partition(int v[], int low, int high, int p[]);
-int sorted(int v[], int n);
-int revsorted(int v[], int p[], int n);
-void posarryint(int p[], int n);
+using namespace std;
+
+void insertionsort(vector<int>& v, vector<int>& p);
+void quickSort(vector<int>& v, int low, int high, vector<int>& p);
+void quickSort2(vector<int>& v, int low, int high, vector<int>& p);
+int partition(vector<int>& v, int low, int high, vector<int>& p);
+int sorted(vector<int>& v);
+int revsorted(vector<int>& v, vector<int>& p);
+void posarryint(vector<int>& p);
 
 #endif

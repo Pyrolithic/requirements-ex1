@@ -6,32 +6,37 @@ using namespace std;
 /*v[] --> Array to be sorted,
 k  --> size of the arrays
 p[] --> Postion array */
-void insertionsort(int v[], double k, int p[])
+void insertionsort(vector<int>& v, vector<int>& p)
 {
 	int i, j, key, pkey;
 	int sort = 0;
-	//guard against a non interger N value, rounds the value down to protect against out of range error
-	int n = floor(k);
-	//fill the postion array
-	posarryint(p, n);
-
-	//exit sort function if array size is less than 2 as an array of 1 is already sorted and to avoid 
-	//starting sort with negative numbers
-	if (n < 2)
+	
+	if (v.size() != p.size());
 	{
-		cout << "Array cannot be sorted: size is less than 2\n";
+		cout << "Error: Array to be sorted and array of postions are different sizes\n";
 		return;
 	}
 
+	//exit sort function if array size is less than 2 as an array of 1 is already sorted and to avoid 
+	//starting sort with negative numbers
+	if (v.size() < 2)
+	{
+		cout << "Error: Array cannot be sorted as the size is less than 2\n";
+		return;
+	}
+
+	//fill the postion array
+	posarryint(p);
+
 	//called sorted function to check if the array is already sorted, exit if it is
-	sort = sorted(v, n);
+	sort = sorted(v);
 	if (sort == 1) return;
 	//call reverese sorted function to check if the array is reverse sorted, if it is the 
 	//function will reverese the array values and the sort function will exit
-	sort = revsorted(v, p, n);
+	sort = revsorted(v, p);
 	if (sort == 1) return;
 
-	for (i = 1; i < n; i++)
+	for (i = 1; i < v.size(); i++)
 	{
 		key = v[i];
 		pkey = p[i];
@@ -62,7 +67,7 @@ the pivot element at its correct position in sorted
 array, and places all smaller (smaller than pivot)
 to left of pivot and all greater elements to right
 of pivot */
-int partition(int v[], int low, int high, int p[])
+int partition(vector<int>& v, int low, int high, vector<int>& p)
 {
 	double pivot = v[high];    // pivot
 	int i = (low - 1);  // Index of smaller element
@@ -102,54 +107,58 @@ v[] --> Array to be sorted,
 p[] --> Postion array,
 low  --> Starting index,
 high  --> Ending index 
-k  --> size of the arrays */
-void quickSort(int v[], int low, int high, int p[], double k)
+n  --> size of the arrays */
+void quickSort(vector<int>& v, int low, int high, vector<int>& p)
 {
 	//sort value to exit before sort is performed if the array is sorted or reverse sorted
 	int sort = 0;
-	//guard against a non interger N value, rounds the value down to protect against out of range error
-	int n = floor(k);
 
-	//fill the postion array
-	posarryint(p, n);
-
+	if (v.size() != p.size());
+	{
+		cout << "Error: Array to be sorted and array of postions are different sizes\n";
+		return;
+	}
+	
 	//exit sort function if array size is less than 2 as an array of 1 is already sorted and to avoid 
 	//starting sort with negative numbers
-	if (n < 2)
+	if (v.size() < 2)
 	{
-		cout << "Array cannot be sorted: size is less than 2\n";
+		cout << "Error: Array cannot be sorted as the size is less than 2\n";
 		return;
 	}
 
+	//fill the postion array
+	posarryint(p);
+
 	//called sorted function to check if the array is already sorted, exit if it is
-	sort = sorted(v, n);
+	sort = sorted(v);
 	if (sort == 1) return;
 	//call reverese sorted function to check if the array is reverse sorted, if it is the 
 	//function will reverese the array values and the sort function will exit
-	sort = revsorted(v, p, n);
+	sort = revsorted(v, p);
 	if (sort == 1) return;
 
 	//go to the quicksort
-	quickSort2(v, low, high, p, n);
+	quickSort2(v, low, high, p);
 
 }
 
 /*function to check if the array is already sorted to avoid running a redundent sort function
 v[] --> Array to be sorted,
 n--> size of the array */
-int sorted(int v[], int n)
+int sorted(vector<int>& v)
 {
 	//variable used to show if the array is sorted, set as sorted until proved otherwise
 	int sorted = 1;
 
-	for (int i = 0; i < n - 1; i++)
+	for (int i = 0; i < v.size() - 1; i++)
 	{
 		//check if the next value is bigger the current value
 		//if it is then the array is not sorted 
 		//so set i equal to n to exit the for loop and set sorted to 0;
 		if (v[i] > v[i + 1])
 		{
-			i = n;
+			i = v.size();
 			sorted = 0;
 		}
 	}
@@ -157,7 +166,7 @@ int sorted(int v[], int n)
 	//display message if the array was already sorted
 	if (sorted == 1)
 	{
-		cout << "The array is already sorted\n";
+		cout << "Note: The array is already sorted\n";
 	}
 
 	//return whether the array was sorted to the function that checked
@@ -168,23 +177,23 @@ int sorted(int v[], int n)
 v[] --> Array to be sorted,
 p[] --> Postion array,
 n--> size of the arrays */
-int revsorted(int v[], int p[], int n)
+int revsorted(vector<int>& v, vector<int>& p)
 {
 	//variable used to show if the array is reverse sorted, set as reverse sorted until proved otherwise
 	int revsorted = 1;
 	//half the value of n to reverse the array, rounded down to leave the central value
 	//unchanged if the array is an odd length
-	int k = floor(n / 2);
+	int k = floor(v.size() / 2);
 	int tempS, tempP;
 
-	for (int i = 0; i < n - 1; i++)
+	for (int i = 0; i < v.size() - 1; i++)
 	{
 		//check if the next value is smaller the current value
 		//if it is the the array is not reverese sorted 
 		//so set i equal to n to exit the for loop and set sorted to 0;
 		if (v[i] < v[i + 1])
 		{
-			i = n;
+			i = v.size();
 			revsorted = 0;
 		}
 	}
@@ -192,18 +201,18 @@ int revsorted(int v[], int p[], int n)
 	//If the array is reverse sorted, reverse it and the postion array
 	if (revsorted == 1)
 	{
-		cout << "The array was reverse sorted\n";
+		cout << "Note: The array was reverse sorted\n";
 		for (int i = 0; i < k; i++)
 		{
 			//reverse the array
 			tempS = v[i];
-			v[i] = v[n - i - 1];
-			v[n - i - 1] = tempS;
+			v[i] = v[v.size() - i - 1];
+			v[v.size() - i - 1] = tempS;
 
 			//reverse the postiona array
 			tempP = p[i];
-			p[i] = p[n - i - 1];
-			p[n - i - 1] = tempP;
+			p[i] = p[v.size() - i - 1];
+			p[v.size() - i - 1] = tempP;
 		}
 	}
 
@@ -214,10 +223,10 @@ int revsorted(int v[], int p[], int n)
 /*function to fill the postion array with incrementing numbers from 1 to n
 p[] --> Postion array,
 n--> size of the array */
-void posarryint(int p[], int n)
+void posarryint(vector<int>& p)
 {
 
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < p.size(); i++)
 	{
 		p[i] = i + 1;
 	}
@@ -230,7 +239,7 @@ low  --> Starting index,
 high  --> Ending index,
 p[] --> Postion array,
 n  --> size of the arrays */
-void quickSort2(int v[], int low, int high, int p[], int n)
+void quickSort2(vector<int>& v, int low, int high, vector<int>& p)
 {
 
 	if (low < high)
@@ -241,7 +250,7 @@ void quickSort2(int v[], int low, int high, int p[], int n)
 
 		// Separately sort elements before
 		// partition and after partition
-		quickSort2(v, low, pi - 1, p, n);
-		quickSort2(v, pi + 1, high, p, n);
+		quickSort2(v, low, pi - 1, p);
+		quickSort2(v, pi + 1, high, p);
 	}
 }
