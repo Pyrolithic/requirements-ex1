@@ -11,7 +11,7 @@ void insertionsort(vector<int>& v, vector<int>& p)
 	int i, j, key, pkey;
 	int sort = 0;
 	
-	if (v.size() != p.size());
+	if (v.size() != p.size())
 	{
 		cout << "Error: Array to be sorted and array of postions are different sizes\n";
 		return;
@@ -113,7 +113,7 @@ void quickSort(vector<int>& v, int low, int high, vector<int>& p)
 	//sort value to exit before sort is performed if the array is sorted or reverse sorted
 	int sort = 0;
 
-	if (v.size() != p.size());
+	if (v.size() != p.size())
 	{
 		cout << "Error: Array to be sorted and array of postions are different sizes\n";
 		return;
